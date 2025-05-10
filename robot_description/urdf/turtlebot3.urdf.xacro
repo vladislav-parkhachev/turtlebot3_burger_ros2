@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<material name="light_black">
+		<color rgba="0.4 0.4 0.4 1.0" />
+	</material>
+
+	<material name="dark">
+		<color rgba="0.3 0.3 0.3 1.0" />
+	</material>
+
+	<xacro:include filename="$(find robot_description)/urdf/robot_core.xacro" />
+	<xacro:include filename="$(find robot_description)/urdf/rplidar_a2m8.xacro" />
+	<xacro:include filename="$(find robot_description)/urdf/realsence_d435.gazebo.xacro" />
+	<xacro:include filename="$(find robot_description)/urdf/rplidar_a2m8.gazebo.xacro" />
+
+	<xacro:arg name="use_nominal_extrinsics" default="true" />
+	<xacro:arg name="add_plug" default="false" />
+	<xacro:arg name="use_mesh" default="true" />
+	<xacro:include filename="$(find robot_description)/urdf/realsence_d435.xacro" />
+
+	<xacro:sensor_d435 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)"
+		add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
+		<origin xyz="0.047 0 0.075" rpy="0 0 0" />
+	</xacro:sensor_d435>
+
+	<xacro:arg name="namespace" default="" />
+
+	<ros2_control name="GazeboSimSystem" type="system">
+		<hardware>
+			<plugin>gz_ros2_control/GazeboSimSystem</plugin>
+		</hardware>
+		<joint name="wheel_left_joint">
+			<command_interface name="velocity">
+				<param name="min">-1</param>
+				<param name="max">1</param>
+			</command_interface>
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+		<joint name="wheel_right_joint">
+			<command_interface name="velocity">
+				<param name="min">-1</param>
+				<param name="max">1</param>
+			</command_interface>
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+	</ros2_control>
+
+	<gazebo>
+		<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+			<ros>
+				<namespace>$(arg namespace)</namespace>
+			</ros>
+			<parameters>$(find robot_simulation)/config/diff_drive_controller.yaml</parameters>
+		</plugin>
+	</gazebo>
+
+</robot>
