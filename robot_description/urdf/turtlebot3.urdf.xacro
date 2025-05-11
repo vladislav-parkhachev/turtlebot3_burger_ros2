@@ -7,9 +7,6 @@
 	<xacro:include filename="$(find robot_description)/urdf/rplidar_a2m8.xacro" />
 	<xacro:include filename="$(find robot_description)/urdf/realsence_d435.xacro" />
 
-	<!-- <xacro:include filename="$(find robot_description)/urdf/realsence_d435.gazebo.xacro" /> -->
-	<!-- <xacro:include filename="$(find robot_description)/urdf/rplidar_a2m8.gazebo.xacro" /> -->
-
 	<!-- <xacro:arg name="namespace" default="" />
 
 	<ros2_control name="GazeboSimSystem" type="system">

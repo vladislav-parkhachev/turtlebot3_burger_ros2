@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <xacro:arg name="add_rplidar_a2" default="false"/>
+    <xacro:arg name="add_rplidar_a2" default="true"/>
     <xacro:property name="add_rplidar_a2" value="$(arg add_rplidar_a2)" />
 
-    <xacro:arg name="add_realsense_d435" default="false"/>
+    <xacro:arg name="add_realsense_d435" default="true"/>
     <xacro:property name="add_realsense_d435" value="$(arg add_realsense_d435)" />
+
+    <xacro:arg name="simulation" default="false"/>
+    <xacro:property name="simulation" value="$(arg simulation)" />
 
 </robot> 
