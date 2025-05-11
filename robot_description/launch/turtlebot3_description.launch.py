@@ -1,6 +1,6 @@
 import os
-import launch
-import launch_ros.descriptions
+import xacro
+import yaml
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -8,6 +8,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition
 from launch.substitutions.launch_configuration import LaunchConfiguration
 from launch_ros.actions import Node
+from pathlib import Path
 
 ARGUMENTS = [
     DeclareLaunchArgument('rviz', default_value='true',
@@ -27,7 +28,10 @@ ARGUMENTS = [
 def generate_launch_description():
     pkg_turtlebot3_description = get_package_share_directory('robot_description')
     xacro_file =  os.path.join(pkg_turtlebot3_description, 'urdf', 'turtlebot3.urdf.xacro')
-    robot_description_str = launch_ros.descriptions.ParameterValue(launch.substitutions.Command(['xacro ', xacro_file]), value_type=str)
+    conf_file =  os.path.join(pkg_turtlebot3_description, 'config', 'robot_components.yaml')
+    config = yaml.safe_load(Path(conf_file).read_text())
+    doc = xacro.process_file(xacro_file, mappings=config)
+    robot_description = doc.toprettyxml(indent='  ')
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -36,7 +40,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {'use_sim_time': LaunchConfiguration('use_sim_time')}, 
-            {'robot_description': robot_description_str}
+            {'robot_description': robot_description}
         ],
     )
 

@@ -1,34 +1,38 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <joint name="scan_joint" type="fixed">
-        <parent link="base_link" />
-        <child link="base_scan" />
-        <origin xyz="-0.032 0 0.124" rpy="0 0 0" />
-        <!-- <origin xyz="-0.032 0 0.184" rpy="0 0 0" /> -->
-    </joint>
+    <xacro:if value="${add_rplidar_a2}">
 
-    <link name="base_scan">
-        <visual>
-            <origin xyz="0.005 0.03 -0.031" rpy="0 0 2.8" />
-            <geometry>
-                <mesh filename="file://$(find robot_description)/meshes/rplidar_a2m8.stl" scale="0.001 0.001 0.001" />
-            </geometry>
-            <material name="dark" />
-        </visual>
+        <joint name="scan_joint" type="fixed">
+            <parent link="base_link" />
+            <child link="base_scan" />
+            <origin xyz="-0.032 0 0.124" rpy="0 0 0" />
+        </joint>
 
-        <collision>
-            <origin xyz="0.015 0 -0.0065" rpy="0 0 0" />
-            <geometry>
-                <cylinder length="0.0315" radius="0.055" />
-            </geometry>
-        </collision>
+        <link name="base_scan">
+            <visual>
+                <origin xyz="0.005 0.03 -0.031" rpy="0 0 2.8" />
+                <geometry>
+                    <mesh filename="file://$(find robot_description)/meshes/rplidar_a2m8.stl"
+                        scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="dark" />
+            </visual>
 
-        <inertial>
-            <mass value="0.114" />
-            <origin xyz="0 0 0" />
-            <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
-        </inertial>
-    </link>
+            <collision>
+                <origin xyz="0.015 0 -0.0065" rpy="0 0 0" />
+                <geometry>
+                    <cylinder length="0.0315" radius="0.055" />
+                </geometry>
+            </collision>
+
+            <inertial>
+                <mass value="0.114" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+            </inertial>
+        </link>
+
+    </xacro:if>
 
 </robot>
