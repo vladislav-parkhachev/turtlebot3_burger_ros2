@@ -7,37 +7,4 @@
 	<xacro:include filename="$(find robot_description)/urdf/rplidar_a2m8.xacro" />
 	<xacro:include filename="$(find robot_description)/urdf/realsence_d435.xacro" />
 
-	<!-- <xacro:arg name="namespace" default="" />
-
-	<ros2_control name="GazeboSimSystem" type="system">
-		<hardware>
-			<plugin>gz_ros2_control/GazeboSimSystem</plugin>
-		</hardware>
-		<joint name="wheel_left_joint">
-			<command_interface name="velocity">
-				<param name="min">-1</param>
-				<param name="max">1</param>
-			</command_interface>
-			<state_interface name="position" />
-			<state_interface name="velocity" />
-		</joint>
-		<joint name="wheel_right_joint">
-			<command_interface name="velocity">
-				<param name="min">-1</param>
-				<param name="max">1</param>
-			</command_interface>
-			<state_interface name="position" />
-			<state_interface name="velocity" />
-		</joint>
-	</ros2_control>
-
-	<gazebo>
-		<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-			<ros>
-				<namespace>$(arg namespace)</namespace>
-			</ros>
-			<parameters>$(find robot_simulation)/config/diff_drive_controller.yaml</parameters>
-		</plugin>
-	</gazebo> -->
-
 </robot>

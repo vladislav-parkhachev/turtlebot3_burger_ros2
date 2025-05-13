@@ -24,12 +24,6 @@ ARGUMENTS = [
     DeclareLaunchArgument('world', default_value=os.path.join(
         get_package_share_directory('robot_simulation'), 'worlds','empty_world.world'),
         description='World to load')
-    # DeclareLaunchArgument('world', default_value=os.path.join(
-    #     get_package_share_directory('mycobot_gazebo'), 'worlds','house.world'),
-    #     description='World to load')
-    # DeclareLaunchArgument('world', default_value=os.path.join(
-    #     get_package_share_directory('yahboom_rosmaster_gazebo'), 'worlds','cafe.world'),
-    #     description='World to load')
 ]
 
 def generate_launch_description():
@@ -46,7 +40,8 @@ def generate_launch_description():
             ('rviz', LaunchConfiguration('rviz')),
             ('use_sim_time', LaunchConfiguration('use_sim_time')),
             ('rviz_config', LaunchConfiguration('rviz_config')),
-            ('joint_state_publisher', 'false')
+            ('joint_state_publisher', 'false'),
+            ('simulation', 'true')
         ]
     )
 
@@ -109,14 +104,9 @@ def generate_launch_description():
     # pkg_share_gazebo = FindPackageShare(package=package_name_gazebo).find(package_name_gazebo)
     # gazebo_models_path = os.path.join(pkg_share_gazebo, gazebo_models_path)
 
-    package_name_gazebo = 'yahboom_rosmaster_gazebo'
-    gazebo_models_path = 'models'
-    pkg_share_gazebo = FindPackageShare(package=package_name_gazebo).find(package_name_gazebo)
-    gazebo_models_path = os.path.join(pkg_share_gazebo, gazebo_models_path)
-
-    set_env_vars_resources = AppendEnvironmentVariable(
-        'GZ_SIM_RESOURCE_PATH',
-        gazebo_models_path)
+    # set_env_vars_resources = AppendEnvironmentVariable(
+    #     'GZ_SIM_RESOURCE_PATH',
+    #     gazebo_models_path)
     
     delayed_start = TimerAction(
         period=5.0,
@@ -130,12 +120,10 @@ def generate_launch_description():
 
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(robot_description_launch_file)
-    ld.add_action(set_env_vars_resources)
+    # ld.add_action(set_env_vars_resources)
     ld.add_action(gazeboLaunch)
     ld.add_action(start_gazebo_ros_bridge_cmd)
     ld.add_action(gz_spawn_entity)
-    # ld.add_action(joint_state_broadcaster_spawner)
-    # ld.add_action(diff_drive_base_controller_spawner)
     ld.add_action(delayed_start)
     ld.add_action(load_joint_state_broadcaster_cmd)
 
