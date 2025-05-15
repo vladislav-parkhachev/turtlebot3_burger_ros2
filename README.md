@@ -16,3 +16,14 @@ rosdep update
 rosdep install --from-paths src -y --ignore-src
 ```
 
+
+
+###  Run teleop_twist_keyboard or teleop_twist_joy
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=True -r cmd_vel:=/diff_drive_base_controller/cmd_vel
+```
+```bash
+ros2 launch robot_teleop joystick.launch.py
+```
+
+
